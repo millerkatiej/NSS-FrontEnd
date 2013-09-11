@@ -1,0 +1,61 @@
+@import url(http://fonts.googleapis.com/css?family=Lily+Script+One);
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans);
+
+body
+{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 16px;
+  background-color: #CCff33;
+}
+
+#logoimg
+{
+  float: left;
+  width: 202px;
+  border: 1px dashed red;
+}
+
+#logotext
+{
+  float: left;
+  width: 365px;
+  border: 1px dashed red;
+  font-family: 'Lily Script One', cursive;
+  font-size: 35px;
+  padding-top: 67px;
+  padding-bottom: 67px;
+}
+
+.clear
+{
+  float: none;
+  clear: both;
+}
+
+a:hover
+{
+  color: orange;
+}
+
+section > h2
+{
+  font-size: 30px;
+}
+
+ul
+{
+  list-style: inside disc;
+  margin-left: 20px;
+}
+
+section > p
+{
+  padding: 10px;
+  line-height: 20px;
+}
+
+p:nth-of-type(2n)
+{
+  font-style: italic;
+  color: blue;
+}
