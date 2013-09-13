@@ -1,0 +1,155 @@
+@import url(http://fonts.googleapis.com/css?family=Istok+Web);
+
+body
+  {
+    font-family: 'Istok Web', sans-serif;
+    font-size: 16px;
+    padding: 15px;
+    line-height: 20px;
+  }
+
+header
+  {
+    background-color: #003366;
+    color: white;
+    height: 75px;
+  }
+
+header a
+  {
+    color: white;
+    text-decoration: none;
+  }
+
+
+#logo img
+  {
+    width: 75px;
+    height: 75px;
+    float: left;
+  }
+
+#tagline
+  {
+    float: left;
+    font-size: 35px;
+    padding: 20px;
+    height: 35px;
+    background: linear-gradient(to right, #005566, #001166);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+#cart
+  {
+    float: right;
+    text-align: center;
+    padding: 10px 10px;
+  }
+
+
+nav
+  {
+    height: 20px;
+    background: #003366;
+    font-size: 15px;
+    padding: 5px 0;
+  }
+
+
+nav li
+  {
+    float: left;
+    margin-right: 30px;
+  }
+
+nav a
+  {
+    text-decoration: none;
+    color: white;
+  }
+
+nav a:hover
+  {
+    background-color: #44687d;
+    font-size: 20px;
+  }
+
+section li
+  {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+
+#indexsection
+{
+  text-align: center;
+}
+h1
+  {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 15px 0;
+  }
+
+td
+{
+  padding: 15px;
+  vertical-align: top;
+}
+
+iframe
+  {
+    padding: 10px 0;
+  }
+.products {
+
+}
+.products li
+  {
+    list-style-type: none;
+    float: left;
+    width: 20%;
+  }
+.products li img {
+  width: 100%;
+}
+
+footer
+  {
+    color: white;
+    background-color: #003366;
+    height: 20px;
+    padding: 5px 5px;
+    clear: both;
+  }
+
+.clear: after
+  {
+content: "";
+    display: table;
+    clear: both;
+  }
+
+footer a
+  {
+    text-decoration: none;
+    color: white;
+  }
+
+footer a:hover
+  {
+    background-color: #44687d;
+    font-size: 20px;
+  }
+
+#cp
+  {
+    float: left;
+  }
+
+#footer-nav
+  {
+    float: right;
+  }
+
