@@ -102,9 +102,7 @@ iframe
   {
     padding: 10px 0;
   }
-.products {
 
-}
 .products li
   {
     list-style-type: none;
@@ -126,7 +124,7 @@ footer
 
 .clear: after
   {
-content: "";
+    content: "";
     display: table;
     clear: both;
   }
