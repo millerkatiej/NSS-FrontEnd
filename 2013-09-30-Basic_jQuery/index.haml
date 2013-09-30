@@ -6,10 +6,19 @@
     %link{rel: 'stylesheet', href: 'css/normalize.css'}
     %link{rel: 'stylesheet', href: 'css/style.css'}
   %body
-    = Haml::Engine.new(File.read('haml/_header.haml')).render
-    = Haml::Engine.new(File.read('haml/_nav.haml')).render
-    = Haml::Engine.new(File.read('haml/_content.haml')).render
-    = Haml::Engine.new(File.read('haml/_footer.haml')).render
+    %input#name{type: 'text', placeholder: 'enter your name...'}
+    %input#color{type: 'text', placeholder: 'enter a color...'}
+    %input#clicker{type: 'button', value: 'Press Me!'}
+
+    #a Div A
+    #b Div B
+    #c Div C
+
+    %input#age{type: 'text', placeholder: 'Enter your age...'}
+    %input#age_check{type: 'button', value: 'Verify Age!'}
+    #age_div Age Verification
+
+
 
     %script{src: 'js/jquery-1.10.2.min.js'}
     %script{src: 'js/underscore-min.js'}
