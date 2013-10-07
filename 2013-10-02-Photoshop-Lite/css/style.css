@@ -1,0 +1,13 @@
+input {
+  float: left; }
+
+.box {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background-color: black;
+  border: 2px dashed black;
+  margin: 10px; }
+
+.clear {
+  clear: both; }
