@@ -5,6 +5,11 @@ $(document).ready(initialize);
 function initialize(){
   $(document).foundation();
   $('#search').click(searchFlickr);
+  $('#save').click(savePhotos);
+  $('#clear').click(clearPhotos);
+  $('#deleteselected').click(deletePhotos);
+  $('#photos').on('click', '.photo', selectedphoto);
+  $('#photos').on('dblclick', '.photo', removeImage);
 }
 
 function searchFlickr() {
@@ -25,10 +30,32 @@ function results(data) {
 
 }
 
+function clearPhotos() {
+  $('#photos').empty();
+}
+
+function selectedphoto() {
+  $(this).toggleClass('selectedphoto');
+}
+
+function deletePhotos() {
+  $('.selectedphoto').remove();
+}
+
+function savePhotos() {
+  var $selectedImages = $('.selectedphoto');
+  $selectedImages.removeClass('selectedphoto');
+  $('#saved-photos').prepend($selectedImages);
+}
+
 function createImage(photo) {
   var url = "url(http://farm"+ photo.farm +".static.flickr.com/"+ photo.server +"/"+ photo.id +"_"+ photo.secret +"_m.jpg)";
   var $div = $('<div>');
   $div.addClass('photo');
   $div.css('background-image', url);
   $('#photos').prepend($div);
+}
+
+function removeImage() {
+  $(this).remove();
 }
