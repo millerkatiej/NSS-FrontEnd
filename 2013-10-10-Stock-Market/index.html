@@ -13,49 +13,45 @@
 <body>
   <div class='row'>
     <div class='small-12 columns'>
-      <h1>Inventory System</h1>
+      <h1>Stock Market Quote Updater</h1>
     </div>
   </div>
   <div class='row'>
     <div class='small-2 columns'>
-      <input id='person' placeholder='Full Name' type='text'>
-    </div>
-    <div class='small-8 columns'>
-      <input id='address' placeholder='Address' type='text'>
-    </div>
-    <div class='small-2 columns'>
-      <input class='button small radius' id='save' type='button' value='Save'>
-    </div>
-  </div>
-  <div class='row'>
-    <div class='small-2 columns'>
-      <input autofocus id='name' placeholder='Item Name' type='text'>
-    </div>
-    <div class='small-1 columns'>
-      <input id='count' placeholder='Count' type='text'>
-    </div>
-    <div class='small-1 columns'>
-      <input id='value' placeholder='Cost' type='text'>
-    </div>
-    <div class='small-2 columns'>
-      <input id='room' placeholder='Which Room' type='text'>
-    </div>
-    <div class='small-2 columns'>
-      <input id='condition' placeholder='Item Condition' type='text'>
-    </div>
-    <div class='small-2 columns'>
-      <input id='date' placeholder='Purchase Date' type='text'>
-    </div>
-    <div class='small-2 columns'>
-      <input class='button small success radius' id='add' type='button' value='Add Item'>
-    </div>
-  </div>
-  <div class='row'>
-    <div class='small-2 columns'>
-      <p>Grand Total</p>
+      <input autofocus id='setfunds' placeholder='Set Funds' type='text'>
     </div>
     <div class='small-10 columns'>
-      <p id='grand-total'></p>
+      <input class='small button success' id='setbutton' type='button' value='SET'>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='small-2 columns'>
+      <input id='symbol' placeholder='Symbol' type='text'>
+    </div>
+    <div class='small-2 columns'>
+      <input id='quantity' placeholder='Quantity' type='text'>
+    </div>
+    <div class='small-8 columns'>
+      <input class='small button success' id='buybutton' type='button' value='BUY'>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='small-2 columns'>
+      <h5>Balance: $</h5>
+    </div>
+    <div class='small-10 columns'>
+      <h5 id='balance'></h5>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='small-9 columns'>
+      <h4>Stock List</h4>
+    </div>
+    <div class='small-2 columns'>
+      <input id='interval' placeholder='Interval Time' type='text'>
+    </div>
+    <div class='small-1 columns'>
+      <input class='button small success' id='intervalbutton' type='button' value='Set'>
     </div>
   </div>
   <div class='row'>
@@ -63,11 +59,11 @@
       <table id='items'>
         <tr>
           <th>Name</th>
-          <th>Countt</th>
-          <th>Cost</th>
-          <th>Room</th>
-          <th>Condition</th>
-          <th>Purchase Date</th>
+          <th>Symbol</th>
+          <th>Purchase Price</th>
+          <th>Current Value</th>
+          <th>Quanitity</th>
+          <th>Total</th>
         </tr>
       </table>
     </div>
@@ -75,6 +71,7 @@
   <script src='js/vendor/jquery-1.10.2.js'></script>
   <script src='js/vendor/foundation.min.js'></script>
   <script src='js/vendor/underscore.js'></script>
+  <script src='js/vendor/moment.min.js'></script>
   <script src='https://cdn.firebase.com/v0/firebase.js'></script>
   <script src='js/app/app.js'></script>
 </body>
