@@ -7,6 +7,8 @@ var Δpositions;
 // Local Schema (defined in keys.js)
 $(document).ready(initialize);
 db.positions = [];
+db.positions = [];
+db.path = [];
 
 
 function initialize(){
@@ -26,45 +28,60 @@ function initialize(){
 function clickStart() {
 
   var geoOptions = {enableHighAccuracy: true, maximumAge: 1000, timeout: 60000};
-
   db.watchId = navigator.geolocation.watchPosition(geoSuccess, geoError, geoOptions);
 }
 
 function clickErase() {
   Δpositions.remove();
   db.positions = [];
+  db.path = [];
 }
 
 // -------------------------------------------------------------------- //
 // -------------------------------------------------------------------- //
 // -------------------------------------------------------------------- //
 
-  function dbPositionAdded(snapshot) {
-    var position = snapshot.val();
+function dbPositionAdded(snapshot) {
+  var position = snapshot.val();
+  $('#debug').text(position.time);
+  var latLng = new google.maps.LatLng(position.latitude, position.longitude); //finds your lat/long and sets it as a variable called latLng
 
-    if(db.positions.length) {
-      // already exists
-    } else {
-      //starting
-      htmlAddStartIcon(position);
+  db.positions.push(position);
+  db.path.push(latLng);
 
-    }
-
-    db.positions.push(position);
-
+  if(db.positions.length === 1) {
+    htmlAddStartIcon(latLng);
+    htmlAddPolyLine();
   }
 
+
+
+}
+
 // -------------------------------------------------------------------- //
 // -------------------------------------------------------------------- //
 // -------------------------------------------------------------------- //
 
 
-function htmlAddStartIcon(position) {
-  var latLng = new google.maps.LatLng(position.latitude, position.longitude); //finds your lat/long and sets it as a variable called latLng
+function htmlAddStartIcon(latLng) {
   var image = '/img/cake.png';
   var marker = new google.maps.Marker({map: db.map, position: latLng, icon: image}); //uses variable latLng to put a marker on where you are
   setCenterZoom(latLng);
 }
+
+function htmlAddPolyLine() {
+  new google.maps.Polyline({
+    path: db.path,
+    map: db.map,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2,
+  });
+
+}
+
+
 
 // -------------------------------------------------------------------- //
 // -------------------------------------------------------------------- //
