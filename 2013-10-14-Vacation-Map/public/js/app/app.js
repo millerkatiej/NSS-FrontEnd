@@ -82,7 +82,8 @@ function htmlAddLocation(location) {
 
 function htmlAddMarker(location) {
   var latLng = new google.maps.LatLng(location.coordinates.lb, location.coordinates.mb);
-  var marker = new google.maps.Marker({map: db.map, position: location.coordinates});
+  var image = '/img/cake.png';
+  var marker = new google.maps.Marker({map: db.map, position: location.coordinates, icon: image});
 
 }
 

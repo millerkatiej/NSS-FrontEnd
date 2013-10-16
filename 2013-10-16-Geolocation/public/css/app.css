@@ -1,0 +1,27 @@
+html, body {
+  height: 100%; }
+
+body {
+  background-color: #FFCCCC; }
+
+#map-canvas {
+  height: 100%;
+  width: 100%;
+  border: 1px solid black; }
+
+#left, #right {
+  float: left; }
+
+#left {
+  height: 100%;
+  width: 85%; }
+
+#right {
+  height: 100%;
+  width: 15%; }
+
+#text {
+  color: #00CCCC; }
+
+#startbutton, #stopbutton, #erasebutton {
+  width: 100%; }
