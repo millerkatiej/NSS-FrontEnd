@@ -7,7 +7,6 @@ var Δpositions;
 // Local Schema (defined in keys.js)
 $(document).ready(initialize);
 db.positions = [];
-db.positions = [];
 db.path = [];
 
 
@@ -19,6 +18,8 @@ function initialize(){
   initMap(36, -86, 5);
   $('#startbutton').click(clickStart);
   $('#erasebutton').click(clickErase);
+  $('#stopbutton').click(clickStop);
+  Δpositions.remove();
 }
 
 // -------------------------------------------------------------------- //
@@ -29,6 +30,10 @@ function clickStart() {
 
   var geoOptions = {enableHighAccuracy: true, maximumAge: 1000, timeout: 60000};
   db.watchId = navigator.geolocation.watchPosition(geoSuccess, geoError, geoOptions);
+}
+
+function clickStop() {
+  navigator.geolcation.clearWatch(db.watchId);
 }
 
 function clickErase() {
@@ -43,16 +48,20 @@ function clickErase() {
 
 function dbPositionAdded(snapshot) {
   var position = snapshot.val();
-  $('#debug').text(position.time);
+
   var latLng = new google.maps.LatLng(position.latitude, position.longitude); //finds your lat/long and sets it as a variable called latLng
 
   db.positions.push(position);
-  db.path.push(latLng);
 
   if(db.positions.length === 1) {
     htmlAddStartIcon(latLng);
-    htmlAddPolyLine();
+    htmlInitializePolyLine();
   }
+
+    db.path.push(latLng);
+    setCenterZoom(latLng);
+
+  $('#debug').text(position.time);
 
 
 
@@ -65,19 +74,18 @@ function dbPositionAdded(snapshot) {
 
 function htmlAddStartIcon(latLng) {
   var image = '/img/cake.png';
-  var marker = new google.maps.Marker({map: db.map, position: latLng, icon: image}); //uses variable latLng to put a marker on where you are
-  setCenterZoom(latLng);
+  db.marker = new google.maps.Marker({map: db.map, position: latLng, icon: image}); //uses variable latLng to put a marker on where you are
 }
 
-function htmlAddPolyLine() {
-  new google.maps.Polyline({
-    path: db.path,
+function htmlInitializePolyLine() {
+  var polyLine = new google.maps.Polyline({
     map: db.map,
     geodesic: true,
-    strokeColor: '#FF0000',
+    strokeColor: '#FFCCCC',
     strokeOpacity: 1.0,
     strokeWeight: 2,
   });
+  db.path = polyLine.getPath();
 
 }
 
@@ -113,6 +121,7 @@ function geoError() {
 
 function setCenterZoom(latLng){
   db.map.setCenter(latLng);
+  db.marker.setPosition(latLng);
   db.map.setZoom(19);
 }
 

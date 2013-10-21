@@ -1,0 +1,17 @@
+.op1 {
+  color: red; }
+
+.op2 {
+  color: blue; }
+
+.operator {
+  color: green; }
+
+.result {
+  color: purple; }
+
+#history > li:nth-child(even) {
+  background-color: #009933; }
+
+#history > li:nth-child(odd) {
+  background-color: #33CCFF; }
