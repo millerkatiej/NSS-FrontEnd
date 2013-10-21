@@ -1,64 +1,99 @@
 'use strict';
 
-module('name-of-section-for-grouping', {setup: setupTest, teardown: teardownTest});
-//modules are a way to group your code
+$(document).ready(initialize);
 
-function setupTest(){
-  initialize(null, true);
+function initialize(fn, flag){
+  if(!canRun(flag)) {return;}
+
+  $(document).foundation();
+  $('#calculate').click(clickCalculate);
+  $('#history').on('click', '.delete', clickDelete);
+  $('#sum').click(clickSum);
+  $('#product').click(clickProduct);
+  $('#filter-negative').click(clickFilterNegative);
+  $('#filter-positive').click(clickFilterPositive);
 }
-//setupTest is for anything that needs to run BEFORE your code begins
 
-function teardownTest(){
+// -------------------------------------------------------------------- //
+// -------------------------------------------------------------------- //
+// -------------------------------------------------------------------- //
+
+function clickCalculate(){
+  var op1 = getValue('#op1');
+  var op2 = getValue('#op2');
+  var operator = getValue('#operator');
+  var computation = op1 + operator + op2;
+  var result = eval(computation);
+  htmlUpdateResult(result);
+  htmlAddToPaperTrail(op1, operator, op2, result);
 }
-// teardownTest is for anything that needs to run AFTER your code finishes
 
+function clickDelete(){
+  var $li = $(this).parent();
+  $li.remove();
+}
 
+function clickSum(){
+  var $results = $('span.result');
+  var numbers = _.map($results, function(span){return parseFloat($(span).text());});
+  var sum = _.reduce(numbers, function(memo, num){ return memo + num; }, 0);
+  htmlUpdateResult(sum);
+}
 
-// asyncTest('Calculate 2 numbers', function(){
-//   expect(4); //how many assertions will be in your test?
-//   $('#op1').val('3');
-//   $('#op2').val('2');
-//   $('#operator').val('*');
+function clickProduct(){
+  var $results = $('span.result');
+  var numbers = _.map($results, function(span){return parseFloat($(span).text());});
+  var product = _.reduce(numbers, function(memo, num){ return memo * num; }, 1);
+  htmlUpdateResult(product);
+}
 
+function clickFilterNegative(){
+  $('span.result:contains("-")').parent().remove();
+}
 
-//   $('#result').on('DOMChanged', function(){
-//     deepEqual($('#op1').val(), '','op1 should be blank'); //in deepEqual, there are three elements in the (), what there is, what you expected, and a string of what you expected
-//     deepEqual($('#op2').val(), '','op2 should be blank');
-//     deepEqual($('#operator').val(), '','operator should be blank');
-//     deepEqual($('#result').text(), '6', 'result should be 6');
-//     start();
-//   });
+function clickFilterPositive(){
+  $('span.result').not(':contains("-")').parent().remove();
+}
 
-//   $('#calculate').trigger('click');
-// });
-//you use asyncTest when there are events involved
+// -------------------------------------------------------------------- //
+// -------------------------------------------------------------------- //
+// -------------------------------------------------------------------- //
 
-test('Paper Trail', function(){
-  expect(8); //how many assertions will be in your test?
-  $('#op1').val('3');
-  $('#op2').val('2');
-  $('#operator').val('+');
-  $('#calculate').trigger('click');
+function htmlUpdateResult(result){
+  $('#result').val(result);
+}
 
-  deepEqual($('#history > li').length, 1, 'should be 1 LIs');
+function htmlAddToPaperTrail(op1, operator, op2, result){
+  var $li = $('<li>');
+  var spans = '<span class="op1">' + op1 + '</span><span class="operator">' + operator + '</span><span class="op2">' + op2 + '</span><span class="equal">=</span><span class="result">' + result + '</span><span class="delete">X</span>';
+  var $spans = $(spans);
+  $li.append($spans);
+  $('#history').prepend($li);
+}
 
-  $('#op1').val('7');
-  $('#op2').val('8');
-  $('#operator').val('*');
-  $('#calculate').trigger('click');
+// -------------------------------------------------------------------- //
+// -------------------------------------------------------------------- //
+// -------------------------------------------------------------------- //
 
+function getValue(selector, fn){
+  var value = $(selector).val();
+  value = value.trim();
+  $(selector).val('');
 
-  deepEqual($('#history > li').length, 2, 'should be 2 LIs');
+  if(fn){
+    value = fn(value);
+  }
 
-  deepEqual($('#history > li:first-child > span').length, 5, 'should be 5 spans');
-  ok($('#history > li:first-child > span:first-child').hasClass('op1'), true, 'should be true that has class op1');
-  ok($('#history > li:first-child > span:nth-child(2)').hasClass('operator'), true, 'should be true that has class operator');
-  ok($('#history > li:first-child > span:nth-child(3)').hasClass('op2'), true, 'should be true that has class op2');
-  ok($('#history > li:first-child > span:nth-child(5)').hasClass('result'), true, 'should be true that has class result');
-  deepEqual($('#history > li:first-child').text(), '7*8=56', 'should be 7 times 8 equals 56 typed out');
+  return value;
+}
 
+function canRun(flag){
+  var isQunit = $('#qunit').length > 0;
+  var isFlag = flag !== undefined;
+  var value = isQunit && isFlag || !isQunit;
+  return value;
+}
 
-
-});
-
-
+// -------------------------------------------------------------------- //
+// -------------------------------------------------------------------- //
+// -------------------------------------------------------------------- //

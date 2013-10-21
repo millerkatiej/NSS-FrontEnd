@@ -1,31 +1,9 @@
-// #map-canvas
-// {
-//   height: 250px;
-//   width: 250px;
-//   border: 1px solid black;
-// }
-
-.op1 {
-  color: red;
+#history > li:nth-child(odd)
+{
+  background-color: red;
 }
 
-.op2 {
-  color: blue;
+#history > li:nth-child(even)
+{
+  background-color: white;
 }
-
-.operator {
-  color: green;
-}
-
-.result {
-  color: purple;
-}
-
-#history > li:nth-child(even){
-  background-color: #009933;
-}
-
-#history > li:nth-child(odd) {
-  background-color: #33CCFF;
-}
-

@@ -1,18 +1,29 @@
-/#map-canvas
-
-.row
-  %h2 Calculator
-.row
-  .small-3.columns
-    %input#op1{type: 'text', autofocus: true, placeholder: '1st #'}
-  .small-2.columns
-    %input#operator{type: 'text', placeholder: 'Operator'}
-  .small-3.columns
-    %input#op2{type: 'text', placeholder: '2nd #'}
-  .small-2.columns
-    #result
-  .small-2.columns
-    %input#calculate.button.small.radius{type: 'button', value: 'CALC'}
 .row
   .small-12.columns
+    %h1 Super Calculator
+.row
+  .small-2.columns
+    %input#op1{type: 'text'}
+  .small-1.columns
+    %input#operator{type: 'text'}
+  .small-2.columns
+    %input#op2{type: 'text'}
+  .small-2.columns
+    %input#calculate.button.small.success{type: 'button', value: 'Calculate'}
+  .small-4.columns
+    %input#result{type: 'text', readonly: true}
+  .small-1.columns
+.row
+  .small-2.columns
+    %input#sum.button.small{type: 'button', value: 'Sum'}
+  .small-2.columns
+    %input#product.button.small{type: 'button', value: 'Product'}
+  .small-2.columns
+    %input#filter-negative.button.small{type: 'button', value: 'Filter -'}
+  .small-2.columns
+    %input#filter-positive.button.small{type: 'button', value: 'Filter +'}
+  .small-4.columns
+.row
+  .small-5.columns
     %ul#history
+  .small-7.columns
