@@ -1,0 +1,56 @@
+.row
+  %h1 Shopping-Site
+.row
+  .small-2.columns
+    %input#product-name{type: 'text', placeholder: 'Name', autofocus: true}
+  .small-2.columns
+    %input#product-image{type: 'text', placeholder: 'Image Source'}
+  .small-2.columns
+    %input#product-weight{type: 'text', placeholder: 'Weight'}
+  .small-2.columns
+    %input#product-price{type: 'text', placeholder: 'Price'}
+  .small-2.columns
+    %input#product-off{type: 'text', placeholder: '% Off'}
+  .small-2.columns
+    %input#add-product{type: 'button', value: 'Add Product'}
+.row
+  .small-12.columns
+    %table#products
+      %tr
+        %th Name
+        %th Image
+        %th Weight
+        %th Price
+        %th % Off
+        %th Sale Price
+.row
+  .small-12.columns
+    %input#previous.button.small.hidden{type: 'button', value: 'Previous'}
+    %input#next.button.small.hidden{type: 'button', value: 'Next'}
+.row
+  .small-2.columns
+    %input#customer-image{type: 'text', placeholder: 'image.png'}
+  .small-2.columns
+    %input#customer-name{type: 'text', placeholder: 'name'}
+  .small-6.columns
+    %input#domestic{type: 'radio', name: 'address', value: 'domestic'} Domestic
+    %input#international{type: 'radio', name: 'address', value: 'international'} International
+  .small-2.columns
+    %input#add-customer.small.radius.button{type: 'button', value: 'Add Customer'}
+.row
+  .small-4.columns
+    %select#select-customer
+.row
+  .small-12.columns
+    %table#cart
+      %tr
+        %th Name
+        %th Count
+        %th Amount
+        %th Weight
+        %th Shipping
+        %th Total
+.row
+  .small-12.columns
+    %input#purchase.button.small{type: 'button', value: 'Purchase'}
+

@@ -1,99 +1,154 @@
 'use strict';
 
-$(document).ready(initialize);
+module('Integration Testing', {setup: setupTest, teardown: teardownTest});
 
-function initialize(fn, flag){
-  if(!canRun(flag)) {return;}
-
-  $(document).foundation();
-  $('#calculate').click(clickCalculate);
-  $('#history').on('click', '.delete', clickDelete);
-  $('#sum').click(clickSum);
-  $('#product').click(clickProduct);
-  $('#filter-negative').click(clickFilterNegative);
-  $('#filter-positive').click(clickFilterPositive);
+function setupTest(){
+  initialize(null, true);
 }
 
-// -------------------------------------------------------------------- //
-// -------------------------------------------------------------------- //
-// -------------------------------------------------------------------- //
-
-function clickCalculate(){
-  var op1 = getValue('#op1');
-  var op2 = getValue('#op2');
-  var operator = getValue('#operator');
-  var computation = op1 + operator + op2;
-  var result = eval(computation);
-  htmlUpdateResult(result);
-  htmlAddToPaperTrail(op1, operator, op2, result);
+function teardownTest(){
 }
 
-function clickDelete(){
-  var $li = $(this).parent();
-  $li.remove();
-}
+test('Calculate 2 numbers', function(){
+  expect(4);
 
-function clickSum(){
-  var $results = $('span.result');
-  var numbers = _.map($results, function(span){return parseFloat($(span).text());});
-  var sum = _.reduce(numbers, function(memo, num){ return memo + num; }, 0);
-  htmlUpdateResult(sum);
-}
+  $('#op1').val('3');
+  $('#op2').val('2');
+  $('#operator').val('*');
+  $('#calculate').trigger('click');
 
-function clickProduct(){
-  var $results = $('span.result');
-  var numbers = _.map($results, function(span){return parseFloat($(span).text());});
-  var product = _.reduce(numbers, function(memo, num){ return memo * num; }, 1);
-  htmlUpdateResult(product);
-}
+  deepEqual($('#op1').val(), '', 'op1 should be blank');
+  deepEqual($('#op2').val(), '', 'op2 should be blank');
+  deepEqual($('#operator').val(), '', 'operator should be blank');
+  deepEqual($('#result').val(), '6', 'result should be 6');
+});
 
-function clickFilterNegative(){
-  $('span.result:contains("-")').parent().remove();
-}
+test('Paper Trail', function(){
+  expect(13);
 
-function clickFilterPositive(){
-  $('span.result').not(':contains("-")').parent().remove();
-}
+  $('#op1').val('3');
+  $('#op2').val('2');
+  $('#operator').val('+');
+  $('#calculate').trigger('click');
 
-// -------------------------------------------------------------------- //
-// -------------------------------------------------------------------- //
-// -------------------------------------------------------------------- //
+  deepEqual($('#history > li').length, 1, 'should be 1 LIs');
 
-function htmlUpdateResult(result){
-  $('#result').val(result);
-}
+  $('#op1').val('7');
+  $('#op2').val('8');
+  $('#operator').val('*');
+  $('#calculate').trigger('click');
 
-function htmlAddToPaperTrail(op1, operator, op2, result){
-  var $li = $('<li>');
-  var spans = '<span class="op1">' + op1 + '</span><span class="operator">' + operator + '</span><span class="op2">' + op2 + '</span><span class="equal">=</span><span class="result">' + result + '</span><span class="delete">X</span>';
-  var $spans = $(spans);
-  $li.append($spans);
-  $('#history').prepend($li);
-}
+  deepEqual($('#history > li').length, 2, 'should be 1 LIs');
+  deepEqual($('#history > li:first-child > span').length, 6, 'should be 6 spans');
+  ok($('#history > li:first-child > span:first-child').hasClass('op1'), 'should have op1 class for first span');
+  ok($('#history > li:first-child > span:nth-child(2)').hasClass('operator'), 'should have operator class for first span');
+  ok($('#history > li:first-child > span:nth-child(3)').hasClass('op2'), 'should have op1 class for first span');
+  ok($('#history > li:first-child > span:nth-child(4)').hasClass('equal'), 'should have equal class for first span');
+  ok($('#history > li:first-child > span:nth-child(5)').hasClass('result'), 'should have result class for first span');
+  deepEqual($('#history > li:first-child > span:nth-child(1)').text(), '7', 'should have 7 in top row for op1');
+  deepEqual($('#history > li:first-child > span:nth-child(2)').text(), '*', 'should have * in top row for operator');
+  deepEqual($('#history > li:first-child > span:nth-child(3)').text(), '8', 'should have 8 in top row for op2');
+  deepEqual($('#history > li:first-child > span:nth-child(4)').text(), '=', 'should have = in top row for equal');
+  deepEqual($('#history > li:first-child > span:nth-child(5)').text(), '56', 'should have 56 in top row for result');
+});
 
-// -------------------------------------------------------------------- //
-// -------------------------------------------------------------------- //
-// -------------------------------------------------------------------- //
+test('Remove Calculation', function(){
+  expect(4);
 
-function getValue(selector, fn){
-  var value = $(selector).val();
-  value = value.trim();
-  $(selector).val('');
+  $('#op1').val('3');
+  $('#op2').val('2');
+  $('#operator').val('+');
+  $('#calculate').trigger('click');
 
-  if(fn){
-    value = fn(value);
-  }
+  $('#op1').val('7');
+  $('#op2').val('8');
+  $('#operator').val('*');
+  $('#calculate').trigger('click');
 
-  return value;
-}
+  $('#op1').val('3');
+  $('#op2').val('3');
+  $('#operator').val('-');
+  $('#calculate').trigger('click');
 
-function canRun(flag){
-  var isQunit = $('#qunit').length > 0;
-  var isFlag = flag !== undefined;
-  var value = isQunit && isFlag || !isQunit;
-  return value;
-}
+  deepEqual($('#history > li').length, 3, 'should be 3 results');
+  deepEqual($('#history > li:first-child > .result').text(), '0', 'should have 0 in top row for result');
 
-// -------------------------------------------------------------------- //
-// -------------------------------------------------------------------- //
-// -------------------------------------------------------------------- //
+  $('#history > li:nth-child(1) > .delete').trigger('click');
+
+  deepEqual($('#history > li').length, 2, 'should be 2 results');
+  deepEqual($('#history > li:first-child > .result').text(), '56', 'should have 56 in top row for result');
+});
+
+test('Alternating Row Colors', function(){
+  expect(4);
+
+  $('#op1').val('3');
+  $('#op2').val('2');
+  $('#operator').val('+');
+  $('#calculate').trigger('click');
+
+  $('#op1').val('7');
+  $('#op2').val('8');
+  $('#operator').val('*');
+  $('#calculate').trigger('click');
+
+  $('#op1').val('3');
+  $('#op2').val('3');
+  $('#operator').val('-');
+  $('#calculate').trigger('click');
+
+  deepEqual($('#history > li:first-child').css('background-color'), 'rgb(255, 0, 0)', 'should be red background color');
+  deepEqual($('#history > li:nth-child(2)').css('background-color'), 'rgb(255, 255, 255)', 'should be white background color');
+
+  $('#history > li:nth-child(1) > .delete').trigger('click');
+
+  deepEqual($('#history > li:first-child').css('background-color'), 'rgb(255, 0, 0)', 'should be red background color');
+  deepEqual($('#history > li:nth-child(2)').css('background-color'), 'rgb(255, 255, 255)', 'should be white background color');
+});
+
+test('Sum Button', function(){
+  expect(1);
+
+  $('#op1').val('3');
+  $('#op2').val('2');
+  $('#operator').val('+');
+  $('#calculate').trigger('click');
+
+  $('#op1').val('7');
+  $('#op2').val('8');
+  $('#operator').val('*');
+  $('#calculate').trigger('click');
+
+  $('#op1').val('3');
+  $('#op2').val('3');
+  $('#operator').val('-');
+  $('#calculate').trigger('click');
+
+  $('#sum').trigger('click');
+
+  deepEqual($('input#result').val(), '61', 'summing up 3 numbers');
+});
+
+test('Product Button', function(){
+  expect(1);
+
+  $('#op1').val('3');
+  $('#op2').val('2');
+  $('#operator').val('+');
+  $('#calculate').trigger('click');
+
+  $('#op1').val('7');
+  $('#op2').val('8');
+  $('#operator').val('*');
+  $('#calculate').trigger('click');
+
+  $('#op1').val('3');
+  $('#op2').val('3');
+  $('#operator').val('-');
+  $('#calculate').trigger('click');
+
+  $('#product').trigger('click');
+
+  deepEqual($('input#result').val(), '0', 'multiplying 3 numbers');
+});
+
