@@ -1,0 +1,22 @@
+extends ../template/layout
+include ../mixins/form-helper
+
+block content
+  .row
+    .small-2.columns
+      a(href="../"): input.button.small.success.expand(type="button", value="Home")
+      a(href="../movies"): input.button.small.success.expand(type="button", value="Movies")
+    .small-10.columns
+      h1 Add a Movie Page
+  .row
+    .small-6.columns
+      form(action="/movies", method="post")
+        mixin field('title', 'Title', 'Le Samouri', true)
+        mixin field('image', 'Image URL', 'Image URL')
+        mixin field('color', 'Color', 'Red')
+        mixin field('rated', 'Rated', 'PG-13')
+        mixin field('studio', 'Studio', 'Studio Canal')
+        mixin field('gross', 'Gross', '$5,000,000')
+        mixin field('numTheaters', 'Number of Theaters', '29')
+        button.small.success(type="submit") Save
+    .small-6.columns

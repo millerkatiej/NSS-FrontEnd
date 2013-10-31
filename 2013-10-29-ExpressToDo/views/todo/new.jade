@@ -1,0 +1,12 @@
+extends ../template/layout
+include ../mixins/form-helper
+
+block content
+  h1 To Do List
+  h2 New Task Page
+  a(href="/../todo"): p To Do List
+  form(action="/todos", method="post")
+    mixin field('item', 'New Task', 'Groceries', true)
+    mixin field('due', 'Due Date', '10-31-2013')
+    mixin field('color', 'Color', '#ff55cc...')
+    button(type="submit") Save

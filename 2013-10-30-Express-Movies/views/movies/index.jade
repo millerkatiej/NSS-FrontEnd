@@ -1,0 +1,46 @@
+extends ../template/layout
+
+block content
+  .row
+    .small-2.columns
+      a(href="../"): input.button.small.success.expand(type="button", value="Home")
+      a(href="../movies/new"): input.button.small.success.expand(type="button", value="Add Movie")
+    .small-10.columns
+      h1 Movies Page
+  .row
+    .small-12.columns
+      - var movie = movies[0]
+      if movie
+        table#movies
+          thead: tr
+            each value, property in movie
+              unless value instanceof Function || property === 'gross'
+                  if property === 'numtheaters'
+                    th number of theaters
+                  else
+                    th= property
+            th gross per theater
+            th gross
+            th
+          tbody
+            each movie in movies
+              tr
+                each value, property in movie
+                  if property === 'title'
+                    td=value
+                  if property === 'image'
+                    td: img(src= value)
+                  if property === 'color'
+                    td(style="background-color:#{movie.color};")
+                  if property === 'rated'
+                    td= value
+                  if property === 'studio'
+                    td= value
+                  if property ==='numTheaters'
+                    td= value
+                td= movie.grossPerTheaterUSD()
+                td= movie.grossUSD()
+                td
+                  form(action='/movies/#{movie.title}', method='post')
+                    input(type='hidden', name='_method', value='delete')
+                    button.tiny.alert.radius(type='submit') Delete

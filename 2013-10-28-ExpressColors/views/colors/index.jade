@@ -1,0 +1,25 @@
+//- extends ../template/layout.jade
+//- block content
+//-   h1 Colors Page
+//-   - var x = 3
+//-   - var y = 2
+//-   h2= (x*y)
+//-   //-this code is not actually being run on the browser, it is run on the server
+//-   //-html is created to send back to the browser
+//-   - var word = 'funny'
+//-   h3 very #{word}, yes it is
+//-   //-the above is string interpolation
+//-   h3= title
+//-   h4= color
+//-   //- title, color variables are being defined in routes/colors.js
+
+
+extends ../template/layout.jade
+block content
+  h1 Colors Page
+  a(href='/colors/new') New Color Form
+  p= colors
+  p= colors[0]
+  ul
+    - each color in colors
+      li(style='color:#{color};font-size:30px;')= color
