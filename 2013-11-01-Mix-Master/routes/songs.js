@@ -29,3 +29,24 @@ exports.create = function(req, res){
     res.redirect('/songs');
   });
 };
+
+/*
+ * GET /songs/:id
+ */
+
+exports.show = function(req, res){
+  Song.findById(req.params.id, function(err, song){
+    res.render('songs/show', {title: 'Song', song: song});
+  });
+};
+
+
+/*
+ * DELETE /songs/:id
+ */
+
+exports.delete = function(req, res){
+  Song.findByIdAndRemove(req.params.id, function (id, options, callback) {
+    res.redirect('/songs');
+});
+};
