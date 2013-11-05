@@ -25,12 +25,8 @@ exports.new = function(req, res){
  */
 
 exports.create = function(req, res){
-  console.log('--before--');
-  console.log(req.body);
-
   new Artist(req.body).save(function(err, artist, count){
-    console.log('--after--');
-    console.log(artist);
+
     res.redirect('/artists');
   });
 

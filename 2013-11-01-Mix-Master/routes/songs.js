@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Song = mongoose.model('Song');
+var Genre = mongoose.model('Genre');
 
 /*
  * GET /songs
@@ -16,7 +17,9 @@ exports.index = function(req, res){
  */
 
 exports.new = function(req, res){
-  res.render('songs/new', {title: 'Express'});
+  Genre.find(function(err, genres){
+    res.render('songs/new', {title: 'New Song', genres: genres});
+  });
 };
 
 /*
@@ -24,9 +27,14 @@ exports.new = function(req, res){
  */
 
 exports.create = function(req, res){
-  req.body.genres = req.body.genres.split(', ');
-  new Song(req.body).save(function(err, song, count){
-    res.redirect('/songs');
+  new Song(req.body).save(function(songErr, song, count){
+    if(songErr){
+      Genre.find(function(genreErr, genres){
+        res.render('songs/new', {title: 'Song Page', errors: songErr.errors, genres: genres, song: new Song()})
+      });
+    } else{
+      res.redirect('/songs');
+    }
   });
 };
 
@@ -50,3 +58,14 @@ exports.delete = function(req, res){
     res.redirect('/songs');
 });
 };
+
+
+// /*
+//  * GET /genres/:id/edit
+//  */
+
+// exports.edit = function(req, res){
+//     Song.findById(req.params.id, function(err, song){
+//       res.render('song/edit', {title: 'Edit Song', song: song});
+//     });
+// };
