@@ -1,0 +1,14 @@
+table#todos
+  thead
+    tr
+      th Title
+      th Due Date
+      th Priority
+      th Delete
+  tbody#todobody
+    each todo in todos
+      tr(style='background-color:#{todo.priority.color};')
+        td= todo.title
+        td= todo.dueDate
+        td= todo.priority.name
+        td.delete: button.small.radius.alert Delete
