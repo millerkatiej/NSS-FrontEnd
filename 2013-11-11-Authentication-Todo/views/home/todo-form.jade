@@ -1,0 +1,7 @@
+form#todo(action='/', method='post')
+  fieldset
+    legend Enter To Do List Item
+    .row
+      mixin field(4, 'text', 'title', 'Title')
+      mixin field(4, 'text', 'category', 'Category')
+      mixin field(4, 'Boolean', 'dueDate', 'Due Date')
