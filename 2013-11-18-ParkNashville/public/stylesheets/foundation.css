@@ -3098,7 +3098,7 @@ label.error {
         width: 0;
         height: 0;
         border: inset 5px;
-        border-color: rgba(255, 255, 255, 0.5) transparent transparent transparent;
+        border-color: rgba(255, 255, 255, 1) transparent transparent transparent;
         border-top-style: solid;
         margin-top: -2.5px;
         top: 22.5px; }
@@ -3117,14 +3117,14 @@ label.error {
     .top-bar-section .dropdown {
       left: 0;
       top: auto;
-      background: transparent;
+      background: #000000;
       min-width: 100%; }
       .top-bar-section .dropdown li a {
         color: white;
         line-height: 1;
         white-space: nowrap;
         padding: 7px 15px;
-        background: #1e1e1e; }
+        background: #000000; }
       .top-bar-section .dropdown li label {
         white-space: nowrap;
         background: #1e1e1e; }
@@ -3153,7 +3153,7 @@ label.error {
     background: black;
     color: white; }
   .no-js .top-bar-section ul li:active > a {
-    background: #090909;
+    background: black;
     color: white; }
   .no-js .top-bar-section .has-dropdown:hover > .dropdown {
     display: block; } }
