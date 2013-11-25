@@ -1,0 +1,14 @@
+table#parkingSpotsTable
+  thead
+    tr
+      th User
+      th Comments
+      th Published Date
+  tbody
+    each todo in todos
+      tr(data-todo-id=todo.id, style='background-color:#{todo.priority.color};text-decoration:#{todo.completed ? "line-through" : "none"};')
+        td.user: input(type='checkbox', checked=todo.completed)
+        td.title= todo.title
+        td.due-date= moment(todo.dueDate).format('dddd, MMMM Do YYYY')
+        td.priority= todo.priority.name
+        td.delete: button.tiny.radius.alert Delete

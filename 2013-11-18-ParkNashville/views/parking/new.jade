@@ -1,0 +1,46 @@
+extends ../template/layout
+include ../mixins/form-helper
+
+
+
+block content
+
+  .row
+    .small-12.columns
+      #map-canvas
+
+  .row
+    .small-1.columns
+      h5= 'User'
+    .small-4.columns
+      h5= 'Comment'
+    .small-3.columns
+      h5= 'Hours Available'
+    .small-2.columns
+      h5= 'Parking Attendant?'
+    .small-2.columns
+      h5= 'Comment Date'
+
+
+
+
+  .row
+    div#commentData.small-12.columns
+      if ps.comments.length
+        each comment in ps.comments
+          .row
+            .small-1.columns
+              p= comment.userName
+            .small-4.columns
+              p= comment.comment
+            .small-3.columns
+              p= comment.hours
+            .small-2.columns
+              p= comment.parkingAttendant
+            .small-2.columns
+              p#commentDate= moment(comment.createdAt).format('MMMM Do YYYY, h:mm a')
+      script
+        var position = {lat: #{ps.lat}, lng: #{ps.lng}};
+  .row
+    .small-12.columns
+      include creator-form

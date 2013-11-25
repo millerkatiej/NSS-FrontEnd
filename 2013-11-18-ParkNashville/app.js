@@ -30,6 +30,7 @@ var sylvanpark = require('./routes/sylvanpark');
 var tsu = require('./routes/tsu');
 var vanderbilt = require('./routes/vanderbilt');
 var parking = require('./routes/parking');
+var faq = require('./routes/faq');
 
 var app = express();
 var RedisStore = require('connect-redis')(express);
@@ -64,9 +65,13 @@ app.get('/sylvanpark', sylvanpark.index);
 app.get('/tsu', tsu.index);
 app.get('/vanderbilt', vanderbilt.index);
 
+app.get('/faq', faq.index);
+
 app.post('/parking', parking.create);
 app.get('/parking', parking.marker);
-app.get('/parking/:id', parking.show);
+app.get('/parking/:id', parking.new);
+app.post('/comments', parking.comments);
+
 
 // start server & socket.io
 var common = require('./sockets/common');

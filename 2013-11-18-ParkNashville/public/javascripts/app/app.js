@@ -87,6 +87,8 @@ function initialize(){
 
 
   google.maps.event.addListener(map, 'dblclick', createPage);
+
+  $('a#save-parking').on('click', clickSaveParking);
 }
 
 
@@ -130,14 +132,34 @@ function initMap(lat, lng, zoom){
 function addMarkers(){
 
   sendAjaxRequest('/parking', null, 'get', null, null, function(response){
-    console.log(response[0].lat, response[0].lng);
+    var markers = [];
+    var infowindows = [];
     for (var i = 0; i < response.length; i++) {
       var myLatLng = new google.maps.LatLng(response[i].lat, response[i].lng);
+      var contentString = '' + response[i]._id + '';
       var marker = new google.maps.Marker({
         position: myLatLng,
       });
-      marker.setMap(map);
-    };
+      var infowindow = new google.maps.InfoWindow({
+        content: ('<a href="/parking/'+contentString+'">View Spot Information')
+      });
+      infowindows.push(infowindow);
+      markers.push(marker);
+    }
+
+    for(var m = 0; m < markers.length; m++){
+      google.maps.event.addListener(markers[m], 'click', function(innerKey) {
+        return function() {
+          infowindows[innerKey].open(map, markers[innerKey]);
+        };
+      }(m));
+      google.maps.event.addListener(markers[m], 'dblclick', function(innerKey) {
+        return function() {
+          infowindows[innerKey].close(map, markers[innerKey]);
+        };
+      }(m));
+      markers[m].setMap(map);
+    }
   });
 }
 
@@ -150,4 +172,20 @@ function createPage(loc){
       window.location.href = '/parking/' + response._id;
     });
   }
+}
+
+function clickSaveParking(e){
+  var data = {};
+  data.userName = $('form#createSpot input[name="userName"]').val();
+  data.comment = $('form#createSpot input[name="comment"]').val();
+  data.hours = $('form#createSpot input[name="hours"]').val();
+  data.parkingAttendant = $('form#createSpot input[name="parkingAttendant"]:checked').val();
+  data.parkingSpotId = $('form#createSpot input[name="parkingSpotId"]').val();
+
+  sendAjaxRequest('/comments', data, 'post', null, e, function(response){
+    $('#commentData').append('<div class="row"><div class="small-1 columns"><p>'+response.userName+'</p></div><div class="small-4 columns"><p>'+response.comment+'</p></div><div class="small-3 columns"><p>'+response.hours+'</p></div><div class="small-2 columns"><p>'+response.parkingAttendant+'</p></div><div class="small-1 columns"><p>'+response.createdAt+'</p></div></div>');
+    $('form#createSpot')[0].reset();
+
+  });
+
 }

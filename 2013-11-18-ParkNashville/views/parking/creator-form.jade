@@ -1,0 +1,17 @@
+form#createSpot(action='/parking', method='post')
+  fieldset
+    legend New Comment
+    .row
+      if ps
+        input(type='hidden', name='parkingSpotId', value=ps.id)
+      mixin field(2, 'text', 'userName', 'User Name')
+      mixin field(10, 'text', 'comment', 'Enter Comments (time parked, tips, etc.')
+    .row
+      mixin field(4, 'text', 'hours', 'Hours Available To Park')
+      .small-2.columns: p="Parking Attendant?"
+      mixin field(1, 'radio', 'parkingAttendant', 'Yes', 'true')
+      mixin field(1, 'radio', 'parkingAttendant', 'No', 'false')
+      .small-8.columns
+    .row
+      .small-10.columns
+      .small-2.columns: a#save-parking.button.radius.success.small.expand Save

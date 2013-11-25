@@ -1,19 +1,19 @@
 .row
   .small-12.columns
-    img#pnLogo(src='./images/tnflag.jpeg')
+    img#pnLogo(src='/images/tnflag.jpeg')
 .row
   .small-12.columns
     nav.top-bar
       ul.title-area
         li.name
           h1: a(href='http://localhost:3000') Home
-          //- this needs to be changed for each page
       section.top-bar-section
         ul.right
           li
-            a(href='#') Frequently Asked Questions
+            a(href='http://localhost:3000/faq') Frequently Asked Questions
           li.divider
-          li.has-dropdown: a(href='#' data-dropdown='drop1') Search By Neighborhood
+          li.has-dropdown
+            a(href='#' data-dropdown="drop1") Search By Neighborhood
             ul#drop1.f-dropdown
               li: a(href='http://localhost:3000/fivepoints') 5 Points
               li: a(href='#') 8th South
@@ -31,6 +31,7 @@
               li: a(href='#') Metrocenter
               li: a(href='#') Midtown
               li: a(href='#') Music Row
+              li: a(href='#') The Nations
               li: a(href='#') North Nashville
               li: a(href='#') Riverside Village
               li: a(href='#') SoBro
