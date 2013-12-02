@@ -9,8 +9,8 @@ form#createSpot(action='/parking', method='post')
     .row
       mixin field(4, 'text', 'hours', 'Hours Available To Park')
       .small-2.columns: p="Parking Attendant?"
-      mixin field(1, 'radio', 'parkingAttendant', 'Yes', 'true')
-      mixin field(1, 'radio', 'parkingAttendant', 'No', 'false')
+      mixin field(1, 'radio', 'parkingAttendant', 'Yes', 'Yes')
+      mixin field(1, 'radio', 'parkingAttendant', 'No', 'No')
       .small-8.columns
     .row
       .small-10.columns

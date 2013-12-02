@@ -1,6 +1,5 @@
 /* global document, window */
 
-
 $(document).ready(initialize);
 
 var map, position;
@@ -182,8 +181,10 @@ function clickSaveParking(e){
   data.parkingAttendant = $('form#createSpot input[name="parkingAttendant"]:checked').val();
   data.parkingSpotId = $('form#createSpot input[name="parkingSpotId"]').val();
 
+
   sendAjaxRequest('/comments', data, 'post', null, e, function(response){
-    $('#commentData').append('<div class="row"><div class="small-1 columns"><p>'+response.userName+'</p></div><div class="small-4 columns"><p>'+response.comment+'</p></div><div class="small-3 columns"><p>'+response.hours+'</p></div><div class="small-2 columns"><p>'+response.parkingAttendant+'</p></div><div class="small-1 columns"><p>'+response.createdAt+'</p></div></div>');
+    var commentDate = moment(response.createdAt).format('MMMM Do YYYY, h:mm a');
+    $('#commentData').append('<div class="row"><div class="small-1 columns"><p>'+response.userName+'</p></div><div class="small-5 columns"><p>'+response.comment+'</p></div><div class="small-2 columns"><p>'+response.hours+'</p></div><div class="small-2 columns"><p>'+response.parkingAttendant+'</p></div><div class="small-2 columns"><p>'+commentDate+'</p></div></div>');
     $('form#createSpot')[0].reset();
 
   });

@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
-var moment = req
+
 var Comment = mongoose.Schema({
   parkingSpotId:          String,
   userName:               String,
   comment:                String,
   hours:                  String,
-  parkingAttendant:       {type: Boolean},
-  createdAt:              moment({type: Date, default: Date.now}).format(MMMM Do YYYY, h:mm a)
+  parkingAttendant:       {type: String},
+  createdAt:              {type: Date, default: Date.now}
 });
 
 mongoose.model('Comment', Comment);

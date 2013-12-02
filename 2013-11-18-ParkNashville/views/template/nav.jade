@@ -1,6 +1,22 @@
 .row
   .small-12.columns
-    img#pnLogo(src='/images/tnflag.jpeg')
+    div.orbit-container
+      ul(data-orbit)
+        li.active
+          img(src="/images/logo.gif" alt="slide 1")
+        li
+          img(src="/images/eastnash.gif" alt="slide 2" )
+        li
+          img(src="/images/hillsboro.gif" alt="slide 3")
+        li
+          img(alt="slide 4" src="/images/downtown.gif")
+        li
+          img(src="/images/sylvan.gif" alt="slide 5")
+        li
+          img(src="/images/fisk.gif" alt="slide 6")
+
+
+
 .row
   .small-12.columns
     nav.top-bar
@@ -9,8 +25,6 @@
           h1: a(href='http://localhost:3000') Home
       section.top-bar-section
         ul.right
-          li
-            a(href='http://localhost:3000/faq') Frequently Asked Questions
           li.divider
           li.has-dropdown
             a(href='#' data-dropdown="drop1") Search By Neighborhood
